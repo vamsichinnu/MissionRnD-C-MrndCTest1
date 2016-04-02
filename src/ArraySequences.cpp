@@ -30,8 +30,65 @@ Difficulty : Medium
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+void ap(int *arr, int len, int *res,int i,int j)
+{
+	int p, d, count = 0;
+	for (i =i; i <= len; i++)
+	{
+		if (arr[i + 1] - arr[i] == arr[i + 2] - arr[i + 1])
+		{
+			if (count == 0)
+			{
+				p = i;
+			}
+			count++;
+		}
+		else if(count >= 1)
+		{
+			res[j] = p;
+			res[j + 1] = i + 2;
+			break;
+		}
+	}
+}
+void gp(int *arr, int len, int *res, int j)
+{
+	int i,count=0,p;
+	for (i = 0; i <= len; i++)
+	{
+		if (arr[i] != 0 && arr[i + 1] != 0 && arr[i + 1] != 0)
+		{
 
+			if (arr[i + 1] / arr[i] == arr[i + 2] / arr[i + 1])
+			{
+				if (count == 0)
+				{
+					p = i;
+				}
+				count++;
+			}
+			else if (count >= 1)
+			{
+				res[j] = p;
+				res[j + 1] = i + 2;
+				break;
+			}
+		}
+	}
+}
 int * find_sequences(int *arr, int len){
+	int *res;
+	res = (int *)malloc(sizeof(int)* 6);
 	//Return final array which has 6indexes [AP1_S,AP1_E,AP2_S,AP2_E,GP1_S,GP2_E]
-	return NULL;
+	if (arr)
+	{
+		ap(arr, len - 1,res,0,0);
+		ap(arr, len - 1, res, res[1],2);
+		gp(arr, len - 1, res, 4);
+		return res;
+	}
+	else
+	{
+		return NULL;
+	}
 }
